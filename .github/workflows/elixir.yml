@@ -1,0 +1,29 @@
+name: Elixir CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    name: Build and test
+    runs-on: self-hosted
+
+    env:
+      ImageOS: ubuntu20
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: mix deps.get
+
+      - name: Compile production release
+        run: MIX_ENV=prod mix release
+
+      - name: Start server
+        run: |
+          MIX_ENV=prod mix compile
+          PORT=4000 MIX_ENV=prod elixir --erl "-detached" -S mix phx.server
