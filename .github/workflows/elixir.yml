@@ -21,7 +21,7 @@ jobs:
         run: mix deps.get --force
 
       - name: Compile production release
-        run: MIX_ENV=prod mix release
+        run: MIX_ENV=prod mix release --force
 
       - name: Start server
         run: |
