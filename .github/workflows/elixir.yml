@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Install dependencies
-        run: mix deps.get
+        run: mix deps.get --force
 
       - name: Compile production release
         run: MIX_ENV=prod mix release
