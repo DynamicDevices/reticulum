@@ -113,6 +113,7 @@ jobs:
           cache-from: type=registry,ref=${{ env.Registry_Base_URL }}/${{ env.Registry_Namespace }}/${{ env.repo_name }}:buildcache
           cache-to: type=registry,ref=${{ env.Registry_Base_URL }}/${{ env.Registry_Namespace }}/${{ env.repo_name }}:buildcache,mode=max,image-manifest=true,oci-mediatypes=true
           push: true
+          platforms: linux/amd64,linux/arm64
 
       - name: Docker Build and Push (no cache)
         if: ${{ fromJSON(env.Use_Build_Cache) == false }}
@@ -122,3 +123,4 @@ jobs:
           file: repo/${{ env.Dockerfile }}
           tags: ${{ env.Registry_Base_URL }}/${{ env.Registry_Namespace }}/${{ env.repo_name }}:${{ env.Image_Tag }}-latest,${{ env.Registry_Base_URL }}/${{ env.Registry_Namespace }}/${{ env.repo_name }}:${{ env.Image_Tag }}-${{ github.run_number }}
           push: true
+          platforms: linux/amd64,linux/arm64
